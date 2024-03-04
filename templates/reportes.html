@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand"> 
+            <img src="{{ url_for('static', filename='img/dif.png') }}" alt="DIF COAHUILA Logo" width="30" height="30" class="d-inline-block align-top">
+            Sistema de Tickets - DIF COAHUILA
+        </a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="{{ url_for('panel_admin') }}" class="btn btn-secondary">Regresar al Panel de Administradores</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+<div class="container mt-5">
+    <h1 class="mb-4">Reportes</h1>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    Total de solicitudes
+                </div>
+                <div class="card-body">
+                    <h2 id="total-solicitudes" class="card-title"></h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header bg-warning text-white"> <!-- Cambiado a bg-warning -->
+                    Solicitudes en proceso
+                </div>
+                <div class="card-body">
+                    <h2 id="solicitudes-en-proceso" class="card-title"></h2>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-6 mt-4">
+            <div class="card">
+                <div class="card-header bg-success text-white"> <!-- Cambiado a bg-success -->
+                    Solicitudes resueltas
+                </div>
+                <div class="card-body">
+                    <h2 id="solicitudes-resueltas" class="card-title"></h2>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-lg-6">
+            <h2>Gráfico de Barras</h2>
+            <div class="chart-container">
+                <canvas id="bar-chart"></canvas>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <h2>Gráfico de Pastel</h2>
+            <div class="chart-container">
+                <canvas id="pie-chart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        // Realiza una petición AJAX para obtener los datos de los reportes
+        $.ajax({
+            url: '/datos_reportes',  // Ruta en tu aplicación Flask que devuelve los datos de los reportes en formato JSON
+            type: 'GET',
+            success: function(data) {
+                // Actualiza el contenido de los elementos HTML con los datos obtenidos
+                $('#total-solicitudes').text(data.total_solicitudes);
+                $('#solicitudes-en-proceso').text(data.solicitudes_en_proceso);
+                $('#solicitudes-resueltas').text(data.solicitudes_resueltas);
+
+                // Crea el gráfico de barras
+                var barData = {
+                    labels: ['En proceso', 'Resueltas'],
+                    datasets: [{
+                        label: 'Número de solicitudes',
+                        data: [data.solicitudes_en_proceso, data.solicitudes_resueltas],
+                        backgroundColor: ['#ffc107', '#28a745']
+                    }]
+                };
+
+                var barChart = new Chart($('#bar-chart'), {
+                    type: 'bar',
+                    data: barData
+                });
+
+                // Crea el gráfico de pastel
+                var pieData = {
+                    labels: ['En proceso', 'Resueltas'],
+                    datasets: [{
+                        data: [data.porcentaje_en_proceso, data.porcentaje_resueltas],
+                        backgroundColor: ['#ffc107', '#28a745']
+                    }]
+                };
+
+                var pieChart = new Chart($('#pie-chart'), {
+                    type: 'pie',
+                    data: pieData
+                });
+            },
+            error: function(error) {
+                console.error('Error al obtener los datos de los reportes:', error);
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

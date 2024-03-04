@@ -1,0 +1,8 @@
+.flash-messages {
+    /* Agregar estilos según tu preferencia */
+    transition: opacity 0.5s ease;
+}
+
+.flash-messages.hidden {
+    opacity: 0;
+}

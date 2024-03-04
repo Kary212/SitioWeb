@@ -1,0 +1,31 @@
+/* Estilos para la tabla-container */
+.table-container {
+    max-width: 800px; /* Ajusta el ancho máximo según tus necesidades */
+    margin: 0 auto; /* Centra el contenedor horizontalmente */
+}
+
+
+body {
+    background-color: #f8f9fa;
+}
+
+header {
+    background-color: #343a40;
+    padding: 20px 0;
+}
+
+header h1 {
+    color: #fff;
+    margin-bottom: 0;
+}
+
+main {
+    padding: 20px;
+}
+
+footer {
+    background-color: #343a40;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+}

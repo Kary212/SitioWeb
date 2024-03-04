@@ -1,0 +1,31 @@
+/* Estilos generales */
+body {
+    background-color: #f2f2f2; /* Color corporativo */
+    color: #333333; /* Color de texto principal */
+}
+
+.card {
+    border: 1px solid #ced4da; /* Borde */
+}
+
+.card-header {
+    background-color: #007bff; /* Color de fondo */
+    color: #ffffff; /* Color del texto */
+}
+
+/* Botones */
+.btn-primary {
+    background-color: #007bff; /* Color de fondo */
+    border-color: #007bff; /* Color del borde */
+}
+
+.btn-primary:hover {
+    background-color: #0056b3; /* Color de fondo al pasar el cursor */
+    border-color: #0056b3; /* Color del borde al pasar el cursor */
+}
+
+/* Estilos para mensajes de error */
+.error-input {
+    color: #d9534f; /* Color del texto */
+    border-color: #d9534f; /* Color del borde */
+}

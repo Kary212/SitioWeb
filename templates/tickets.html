@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Tickets</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ticket_admin.css') }}">
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand">
+            <img src="{{ url_for('static', filename='img/dif.png') }}" alt="DIF COAHUILA Logo" width="30" class="d-inline-block align-top">
+            Sistema de Tickets- DIF COAHUILA
+        </a>
+        <h1 class="text-white mb-0">Listado de Tickets</h1>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                        <a href="/admin/registrar_turno" class="btn btn-success mr-3 btn-custom">Agregar Ticket</a>
+                        <a href="{{ url_for('panel_admin') }}" class="btn btn-secondary ">Panel de Administradores</a>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </nav>
+ 
+    <!-- Barra de búsqueda por nombre de usuario -->
+    <div class="container mt-4 mb-3">
+        <label for="nombre_usuario">Buscar por nombre de usuario:</label>
+        <input type="text" id="nombre_usuario" name="nombre_usuario" class="form-control">
+    </div>
+
+   <!-- Lista de tickets -->
+<div class="container mt-4">
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Número de Turno</th>
+                    <th>Área</th>
+                    <th>Nombre de Usuario</th>
+                    <th>Problema</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for turno in turnos %}
+                <tr id="fila{{ turno[0] }}" data-turno="{{ turno[0] }}">
+                    <td>{{ turno[0] }}</td>
+                    <td>{{ turno[1] }}</td>
+                    <td>{{ turno[2] }}</td>
+                    <td>
+                        {% if turno[6] and turno[6]|length > 25 %}
+                            {{ turno[6][:25] }}...
+                        {% else %}
+                            {{ turno[6] }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if turno[7] == 'En proceso' %}
+                            <span class="badge badge-warning">{{ turno[7] }}</span>
+                        {% elif turno[7] == 'Terminado' %}
+                            <span class="badge badge-success">{{ turno[7] }}</span>
+                        {% else %}
+                            {{ turno[7] }}
+                        {% endif %}
+                    </td>
+                    <td class="align-middle">
+                        <div class="btn-group">
+                            <a href="{{ url_for('visualizar_turno_admin', numero_turno=turno[0]) }}" class="btn btn-primary btn-sm" title="Visualizar"><i class="bi bi-eye"></i></a>
+                            
+                            <div class="btn-group ml-1" role="group">
+                                <button type="button" class="btn btn-success btn-sm edit-btn" data-toggle="modal" data-target="#estadoModal" data-turno="{{ turno[0] }}" title="Editar Estado">
+                                    <i class="bi bi-pencil"></i>
+                                </button>
+                            </div>
+                            <div class="btn-group ml-1" role="group">
+                                <button type="button" class="btn btn-danger btn-sm delete-btn" data-turno="{{ turno[0] }}" title="Eliminar">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                                   
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+    <div class="modal fade" id="estadoModal" tabindex="-1" role="dialog" aria-labelledby="estadoModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="estadoModalLabel">Editar Estado</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="estadoForm" method="POST">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="estadoSelect">Seleccionar Estado:</label>
+                            <select id="estadoSelect" name="estado" class="form-control">
+                                <option value="En proceso">En proceso</option>
+                                <option value="Terminado">Terminado</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+ 
+    <!-- Incluir Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Script para filtrar la tabla por nombre de usuario -->
+    <script>
+        $(document).ready(function(){
+            $('#nombre_usuario').on('input', function() {
+                var input, filter, table, tr, td, i, txtValue;
+                input = $(this).val().toLowerCase();
+                table = $('table');
+                tr = table.find('tr');
+    
+                // Recorre todas las filas de la tabla y muestra solo las que coincidan con el filtro
+                tr.each(function() {
+                    td = $(this).find('td:nth-child(3)'); // Columna del nombre de usuario
+                    if (td) {
+                        txtValue = td.text().toLowerCase();
+                        if (txtValue.indexOf(input) > -1) {
+                            $(this).show();
+                        } else {
+                            $(this).hide();
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function(){
+            $('.edit-btn').click(function(){
+                var numero_turno = $(this).data('turno');
+                $('#estadoForm').attr('action', "/cambiar_estado_ticket/" + numero_turno);
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Recuperar el estado de las filas ocultas desde el almacenamiento local
+            var filasOcultas = localStorage.getItem('filasOcultas') ? JSON.parse(localStorage.getItem('filasOcultas')) : [];
+        
+            // Ocultar las filas según el estado almacenado
+            filasOcultas.forEach(function(turnoId) {
+                var fila = document.getElementById('fila' + turnoId);
+                if (fila) {
+                    fila.style.display = 'none';
+                }
+            });
+        
+            // Manejar clics en los botones de eliminar
+            var botonesEliminar = document.querySelectorAll('.delete-btn');
+            botonesEliminar.forEach(function(boton) {
+                boton.addEventListener('click', function() {
+                    var turnoId = boton.getAttribute('data-turno');
+                    var fila = document.getElementById('fila' + turnoId);
+                    if (fila) {
+                        fila.style.display = 'none';
+                        // Guardar el estado de la fila oculta en el almacenamiento local
+                        filasOcultas.push(turnoId);
+                        localStorage.setItem('filasOcultas', JSON.stringify(filasOcultas));
+                    }
+                });
+            });
+        });
+        </script>
+    
+</body>
+</html>

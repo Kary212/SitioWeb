@@ -1,0 +1,203 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Usuarios</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/usuarios_admin.css') }}">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/botones_accion.css') }}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand">
+            <img src="{{ url_for('static', filename='img/dif.png') }}" alt="DIF COAHUILA Logo" width="30" class="d-inline-block align-top">
+            Sistema de Tickets- DIF COAHUILA
+        </a>
+        <h1 class="text-white mb-0">Lista de Usuarios</h1>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="/admin/registrar_usuario" class="btn btn-success mr-3">Agregar Usuario</a>
+                    <a href="{{ url_for('panel_admin') }}" class="btn btn-secondary">Regresar al Panel de Administradores</a>
+                    </form>
+                </li>
+            </ul>
+        </div>
+        
+    </nav>
+     -->
+
+    <!-- Barra de búsqueda por nombre de usuario -->
+    <!-- <div class="container mt-4 mb-3">
+        <label for="nombre_usuario">Buscar por nombre de usuario:</label>
+        <input type="text" id="nombre_usuario" name="nombre_usuario" class="form-control">
+    </div>
+     -->
+    <!-- Lista de usuarios -->
+    <!-- <div class="container mt-4">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Id</th>
+                        <th>Nombre de Usuario</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for usuario in usuarios %}
+                    <tr>
+                        <td>{{ usuario[0] }}</td>
+                        <td>{{ usuario[1] }}</td>
+                  
+                        <td class="align-middle">
+                            <a href="{{ url_for('modificar_usuario_admin', id=usuario[0]) }}" class="btn btn-primary btn-sm" title="Modificar Usuario">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <button type="button" class="btn btn-info btn-sm" onclick="verContraseña('{{ usuario[2] }}')">
+                                <i class="bi bi-eye"></i> 
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div> -->
+
+    <!-- Incluir Bootstrap JS -->
+    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
+
+    <!-- Script para filtrar la tabla por nombre de usuario -->
+    <!-- <script>
+        $(document).ready(function(){
+            $('#nombre_usuario').on('input', function() {
+                var input, filter, table, tr, td, i, txtValue;
+                input = $(this).val().toLowerCase();
+                table = $('table');
+                tr = table.find('tr');
+
+                // Recorre todas las filas de la tabla y muestra solo las que coincidan con el filtro
+                tr.each(function() {
+                    td = $(this).find('td:nth-child(2)'); // Columna del nombre de usuario
+                    if (td) {
+                        txtValue = td.text().toLowerCase();
+                        if (txtValue.indexOf(input) > -1) {
+                            $(this).show();
+                        } else {
+                            $(this).hide();
+                        }
+                    }
+                });
+            });
+        });
+
+        // Función para mostrar la contraseña (seguridad cuestionable, solo como ejemplo)
+        function verContraseña(contraseña) {
+            alert("La contraseña es: " + contraseña);
+        }
+    </script>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Usuarios</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/usuarios_admin.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/botones_accion.css') }}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand">
+            <img src="{{ url_for('static', filename='img/dif.png') }}" alt="DIF COAHUILA Logo" width="30" class="d-inline-block align-top">
+            Sistema de Tickets- DIF COAHUILA
+        </a>
+        <h1 class="text-white mb-0">Lista de Usuarios</h1>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="/admin/registrar_usuario" class="btn btn-success mr-3">Agregar Usuario</a>
+                    <a href="{{ url_for('panel_admin') }}" class="btn btn-secondary">Regresar al Panel de Administradores</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-4 mb-3">
+        <label for="nombre_usuario">Buscar por nombre de usuario:</label>
+        <input type="text" id="nombre_usuario" name="nombre_usuario" class="form-control">
+    </div>
+
+    <div class="container mt-4">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Usuario</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for usuario in usuarios %}
+                    <tr>
+                        <td>{{ usuario[0] }}</td>
+                        <td>{{ usuario[1] }}</td>
+                        <td>
+                            <a href="{{ url_for('modificar_usuario_admin', id=usuario[0]) }}" class="btn btn-primary btn-sm" title="Modificar Usuario">
+                                Modificar
+                            </a>
+                            <!-- Agrega más botones de acciones según sea necesario -->
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Incluir Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Script para filtrar la tabla por nombre de usuario -->
+    <script>
+        $(document).ready(function(){
+            $('#nombre_usuario').on('input', function() {
+                var input, filter, table, tr, td, i, txtValue;
+                input = $(this).val().toLowerCase();
+                table = $('table');
+                tr = table.find('tr');
+
+                tr.each(function() {
+                    td = $(this).find('td:nth-child(2)'); // Columna del nombre de usuario
+                    if (td) {
+                        txtValue = td.text().toLowerCase();
+                        if (txtValue.indexOf(input) > -1) {
+                            $(this).show();
+                        } else {
+                            $(this).hide();
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

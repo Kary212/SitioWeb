@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Turno</title>
+    <!-- Incluir Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <h2>Detalles del Turno Número {{ turno['numeroTurno'] }}</h2>
+        <hr>
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>Área:</strong> {{ turno['area'] }}</p>
+                <p><strong>Nombre de Usuario:</strong> {{ turno['nombre_usuario'] }}</p>
+                <p><strong>Correo electrónico:</strong>{{} turno['correo']}</p>
+                <p><strong>Fecha de Servicio:</strong> {{ turno['fecha_servicio'] }}</p>
+                <p><strong>Hora de Servicio:</strong> {{ turno['hora_servicio'] }}</p>
+                <p><strong>Problema:</strong> {{ turno['problema'] }}</p>
+                <p><strong>Estado:</strong> {{ turno['estado'] }}</p>
+            </div>
+        </div>
+        <!-- Botón para volver a la lista de tickets -->
+        <a href="{{ url_for('tickets') }}" class="btn btn-secondary">Volver a la lista de tickets</a>
+    </div>
+
+    <!-- Incluir Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

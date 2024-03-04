@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administradores</title>
+   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+   <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/x-icon">
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/panel_card.css') }}">
+
+
+</head>
+<body>
+    <header class="bg-dark py-4">
+    <div class="container">   
+        <h1 class="text-white mb-0 text-center display-4">Panel de Administradores</h1>    
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <img src="{{ url_for('static', filename='img/dif.png') }}" alt="DIF COAHUILA Logo" width="30" height="30" class="d-inline-block align-top">
+                    Sistema de Tickets - DIF COAHUILA
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('tickets') }}">Tickets</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('reportes')}}">Dashboard</a>
+                        </li>
+                        <!-- <li class="nav-item">
+                            <a class="nav-link" href="#configuracion">Configuración</a>
+                        </li> -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('usuarios')}}">Usuarios</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link {% if active == 'salir' %}active{% endif %}" href="{{ url_for('cerrar_sesion') }}">Cerrar Sesión</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>        
+    </div>
+</header>
+<main class="container mt-5">
+    <section id="tickets">
+        <div class="row">
+            <div class="col-md-9"> 
+                <h2>Lista de Tickets Recientes</h2>
+                <div class="row">
+                    {% for turno in turnos[:5] %}
+                    <div class="col-md-6 mb-4">
+                        <div class="card card-ticket shadow-sm rounded">
+                            <div class="card-body">
+                                <h5 class="card-title">Ticket {{ turno[0] }}</h5>
+                                <p class="card-text"><strong>Usuario:</strong> {{ turno[2] }}</p>
+                                <p class="card-text"><strong>Fecha:</strong> {{ turno[4] }}</p>
+                                <p class="card-text"><strong>Problema:</strong> {{ turno[6][:25] if turno[6] and turno[6]|length > 25 else turno[6] }}</p>
+                                <p class="card-text"><strong>Estado:</strong> 
+                                    {% if turno[7] == 'En proceso' %}
+                                    <span class="badge badge-warning">{{ turno[7] }}</span>
+                                {% elif turno[7] == 'Terminado' %}
+                                    <span class="badge badge-success">{{ turno[7] }}</span>
+                                {% else %}
+                                    {{ turno[7] }}
+                                {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-md-3"> 
+                <div class="card border-primary shadow total-solicitudes-card">
+                    <div class="card-header bg-primary text-white">Solicitudes</div>
+                    <div class="card-body text-center">
+                        <h3 id="total-solicitudes" class="mb-0">50</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+
+
+<footer class="bg-dark text-white text-center py-5 mt-5">
+            <p>© 2024</p>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<script>
+    $(document).ready(function(){
+        $.ajax({
+            url: '/datos_reportes',
+            type: 'GET',
+            success: function(data){
+                $('#total-solicitudes').text(data.total_solicitudes);
+            },
+            error: function(error){
+                console.error('ERROR')
+            }
+        });
+    });
+</script>
+</body>
+</html>

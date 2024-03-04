@@ -1,0 +1,13 @@
+/* Estilos para los contenedores de las gráficas */
+.chart-container {
+    width: 100%;
+    margin: 0 auto;
+    overflow: hidden; /* Agrega un overflow oculto para evitar saltos */
+}
+
+/* Estilos para las gráficas */
+canvas {
+    display: block; /* Asegura que el lienzo se muestre como bloque */
+    width: 100%;
+    height: auto;
+}

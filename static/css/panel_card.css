@@ -1,0 +1,77 @@
+body {
+    background-color: #f2f2f2; /* Color corporativo */
+    color: #333333; /* Color de texto principal */
+}
+
+.navbar {
+    background-color: #343a40;/* Color de fondo */
+}
+
+.navbar-brand {
+    color: #ffffff ; /* Color del texto */
+    font-weight: bold; /* Ajuste de la fuente */
+}
+
+/* Estilos para las tarjetas de ticket */
+.card-ticket {
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.5rem;
+    transition: all 0.3s ease-in-out;
+}
+
+.card-ticket:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-ticket .card-body {
+    padding: 1.25rem;
+    
+}
+
+/* Estilos para el encabezado de las tarjetas de ticket */
+.card-ticket .card-header {
+    background-color: #004691 !important;
+    color: #fff;
+    border-bottom: 0;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+}
+
+/* Estilos para el texto en las tarjetas de ticket */
+.card-ticket .card-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.card-ticket .card-text {
+    font-size: 1rem;
+}
+
+/* Estilos para los enlaces de navegación en la barra superior */
+.navbar-nav .nav-link {
+    color: #fff;
+    font-weight: bold;
+    transition: color 0.3s ease-in-out;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #ffc107;
+}
+
+/* Estilos para el footer */
+footer {
+    background-color: #343a40;
+    color: #fff;
+}
+
+footer p {
+    margin-bottom: 0;
+}
+
+/* Estilos para el encabezado de la tarjeta de solicitudes */
+.total-solicitudes-card .card-header {
+    background-color: #007bff !important;
+    color: #fff ;
+   
+}

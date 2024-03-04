@@ -1,0 +1,10 @@
+/* login.css */
+
+/* Estilo adicional para centrar el contenido */
+.centered-form {
+    margin-top: 50px; /* Puedes ajustar este valor según sea necesario para centrar el formulario verticalmente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Esto asegura que el formulario esté centrado verticalmente en la página */
+}

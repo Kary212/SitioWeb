@@ -1,0 +1,13 @@
+body {
+    background-color: #f8f9fa;
+      color: #333; 
+}
+.container {
+    padding-top: 10px;
+}
+
+.thead {
+    background-color: #004691; /* Color de fondo para el encabezado de la tabla */
+    color: #fff; /* Color del texto en el encabezado de la tabla */
+}
+
